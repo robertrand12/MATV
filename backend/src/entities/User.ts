@@ -1,5 +1,5 @@
 import { hash } from "argon2";
-import { IsEmail, IsStrongPassword, Length } from "class-validator";
+import { IsEmail, IsPhoneNumber, IsStrongPassword, Length } from "class-validator";
 import { Field, InputType, ObjectType } from "type-graphql";
 import {
   BaseEntity,
@@ -7,13 +7,25 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
+import InstrumentType from "./InstrumentType";
 
-export enum UserRole {
+export enum UserRoleEnum {
   Admin = "admin",
   Musician = "musician",
+}
+
+export enum GroupEnum {
+  A = "A",
+  B = "B",
+  C = "C",
+  D = "D",
+  E = "E",
+  F = "F"
 }
 
 @Entity()
@@ -31,8 +43,12 @@ class User extends BaseEntity {
   id: number;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   email: string;
+
+  @Field()
+  @Column()
+  phoneNumber: string;
 
   @Field()
   @Column()
@@ -41,6 +57,10 @@ class User extends BaseEntity {
   @Field()
   @Column()
   lastName: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true, enum: GroupEnum })
+  group?: GroupEnum;
 
   @Column()
   hashedPassword: string;
@@ -53,12 +73,49 @@ class User extends BaseEntity {
   avatarUrl: string;
 
   @Field()
-  @Column({ enum: UserRole, default: UserRole.Musician })
-  role: UserRole;
+  @Column({ enum: UserRoleEnum, default: UserRoleEnum.Musician })
+  role: UserRoleEnum;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  address?: string;
 
   @CreateDateColumn()
   @Field()
-  createdAt: string;
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  @Field()
+  updateddAt: Date;
+
+  @JoinTable()
+  @ManyToMany(() => InstrumentType, (i) => i.users, {
+    cascade: true,
+  })
+  @Field(() => [InstrumentType])
+  instrumentTypes: InstrumentType[];
+}
+
+@InputType()
+export class NewUserInput {
+  @IsEmail()
+  @Field()
+  email: string;
+
+  @Length(2, 30)
+  @Field()
+  firstName: string;
+  
+  @Length(2, 30)
+  @Field()
+  lastName: string;
+
+  @IsPhoneNumber('FR')
+  @Field()
+  phoneNumber: string;
+
+  @Field({nullable: true})
+  group: string
 }
 
 export default User;
