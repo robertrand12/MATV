@@ -2,6 +2,7 @@ import { Field, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import BandType from "./BandType";
 import DivisionPart from "./DivisionPart";
+import Event from "./Event";
 
 @Entity()
 @ObjectType()
@@ -24,6 +25,9 @@ class Band extends BaseEntity {
 
   @OneToMany(() => DivisionPart, (d) => d.band)
   divisionParts: DivisionPart[];
+
+  @OneToMany(() => Event, (e) => e.band)
+  events: Event[];
 }
 
 export default Band;
