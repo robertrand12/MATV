@@ -7,6 +7,7 @@ import Band from "./entities/Band";
 import DivisionPart from "./entities/DivisionPart";
 import PersonInCharge from "./entities/PersonInCharge";
 import Event from "./entities/Event";
+import Musician from "./entities/Musician";
 
 const db = new DataSource({
   type: "postgres",
@@ -15,7 +16,7 @@ const db = new DataSource({
   username: env.DB_USER,
   password: env.DB_PASS,
   database: env.DB_NAME,
-  entities: [User, InstrumentType, BandType, Band, DivisionPart, Event, PersonInCharge],
+  entities: [User, InstrumentType, BandType, Band, DivisionPart, Event, PersonInCharge, Musician],
   synchronize: true,
   logging: env.NODE_ENV !== "test",
 });

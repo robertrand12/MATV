@@ -9,11 +9,14 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import InstrumentType from "./InstrumentType";
 import Event from "./Event";
+import Musician from "./Musician";
 
 export enum UserRoleEnum {
   Admin = "admin",
@@ -96,9 +99,17 @@ class User extends BaseEntity {
   @Field(() => [InstrumentType])
   instrumentTypes: InstrumentType[];
 
-  @ManyToMany(() => Event, (e) => e.users)
+  @OneToMany(() => Musician, (m) => m.user)
+  @Field(() => [Musician])
+  musicians: Musician[];
+
+  @ManyToMany(() => Event, (e) => e.notAvailableUsers)
   @Field(()=>[Event])
-  events: Event[];
+  notAvailableEvents: Event[];
+
+  @ManyToOne(() => InstrumentType)
+  @Field(() => InstrumentType)
+  preferedInstrument: InstrumentType;
 }
 
 @InputType()

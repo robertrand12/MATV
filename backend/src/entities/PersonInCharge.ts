@@ -36,6 +36,10 @@ class PersonInCharge extends BaseEntity {
   city: string;
 
   @Field()
+  @Column({ type: "int" })
+  zipCode: number;
+
+  @Field()
   @Column()
   role: string;
 

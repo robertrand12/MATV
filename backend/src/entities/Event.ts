@@ -7,12 +7,14 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import Band from "./Band";
 import PersonInCharge from "./PersonInCharge";
 import User from "./User";
+import Musician from "./Musician";
 
 export enum StatusEnum {
   Option = "Option",
@@ -39,11 +41,11 @@ class Event extends BaseEntity {
 
   @UpdateDateColumn()
   @Field()
-  updateddAt: Date;
+  updatedAt: Date;
 
   @Field()
   @Column({ enum: StatusEnum, default: StatusEnum.Option })
-  role: StatusEnum;
+  status: StatusEnum;
 
   @Column({ type: "int" })
   @Field()
@@ -61,20 +63,24 @@ class Event extends BaseEntity {
   @Field(() => PersonInCharge)
   personInCharge: PersonInCharge;
 
-  @Column({ type: "date" })
+  @Column()
   @Field()
   startAt: Date;
 
-  @Column({ type: "date" })
+  @Column()
   @Field()
   endAt: Date;
 
+  @OneToMany(() => Musician, (m) => m.event)
+  @Field(() => [Musician])
+  musicians: Musician[];
+
   @JoinTable()
-  @ManyToMany(() => User, (u) => u.events, {
+  @ManyToMany(() => User, (u) => u.notAvailableEvents, {
     cascade: true,
   })
   @Field(() => [User])
-  users: User[];
+  notAvailableUsers: User[];
 }
 
 export default Event;
