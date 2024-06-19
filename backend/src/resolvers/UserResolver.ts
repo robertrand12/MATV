@@ -7,7 +7,7 @@ import crypto from "crypto";
 class UserResolver {
   @Query(() => [User])
   async userList() {
-    const users = await User.find({ relations: { instrumentTypes: true } });
+    const users = await User.find({ relations: { instrumentTypes: true, events: true } });
     if (users.length > 0) {
       return users;
     } else {

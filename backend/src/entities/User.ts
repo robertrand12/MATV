@@ -13,6 +13,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import InstrumentType from "./InstrumentType";
+import Event from "./Event";
 
 export enum UserRoleEnum {
   Admin = "admin",
@@ -94,6 +95,10 @@ class User extends BaseEntity {
   })
   @Field(() => [InstrumentType])
   instrumentTypes: InstrumentType[];
+
+  @ManyToMany(() => Event, (e) => e.users)
+  @Field(()=>[Event])
+  events: Event[];
 }
 
 @InputType()
