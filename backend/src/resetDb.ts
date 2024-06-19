@@ -4,6 +4,9 @@ import path from "path";
 import User, { GroupEnum, UserRoleEnum } from "./entities/User";
 import { PhoneNumber } from "graphql-scalars/typings/mocks";
 import InstrumentType, { ToneEnum } from "./entities/InstrumentType";
+import BandType from "./entities/BandType";
+import Band from "./entities/Band";
+import DivisionPart from "./entities/DivisionPart";
 
 export async function clearDB() {
   const runner = db.createQueryRunner();
@@ -131,6 +134,94 @@ async function main() {
   await guitare.save();
   await bassDrum.save();
   await snareDrum.save();
+
+  const beretsVerts = new BandType();
+  Object.assign(beretsVerts, {
+    name: "La fanfare des bérets verts",
+  })
+
+  const pepitosSauvages = new BandType();
+  Object.assign(pepitosSauvages, {
+    name: "Les pépitos sauvages",
+  })
+
+  const sambaDelRio = new BandType();
+  Object.assign(sambaDelRio, {
+    name: "Samba del Rio",
+  })
+
+  const jardiniersChanson = new BandType();
+  Object.assign(jardiniersChanson, {
+    name: "Les jardiniers de la chanson",
+  })
+
+  const gentlemanSwing = new BandType();
+  Object.assign(gentlemanSwing, {
+    name: "Les gentlemen du swing",
+  })
+
+  const balcon = new BandType();
+  Object.assign(balcon, {
+    name: "La compagnie des balcons",
+  })
+
+  const noelFanfare = new BandType();
+  Object.assign(noelFanfare, {
+    name: "La fanfare du père Noël",
+  })
+
+  await beretsVerts.save();
+  await pepitosSauvages.save();
+  await sambaDelRio.save();
+  await jardiniersChanson.save();
+  await gentlemanSwing.save();
+  await balcon.save();
+  await noelFanfare.save();
+
+  const beret4 = new Band();
+  Object.assign(beret4, {
+    bandType: beretsVerts,
+    numberOfMusicians: 4
+  })
+
+  await beret4.save();
+
+  const voiceABeret4 = new DivisionPart();
+  Object.assign(voiceABeret4, {
+    nameOfVoice: "1",
+    band: beret4,
+    numberOfMusicians: 1,
+    instrumentTypes: [trumpet]
+  })
+
+  const voiceBBeret4 = new DivisionPart();
+  Object.assign(voiceBBeret4, {
+    nameOfVoice: "2",
+    band: beret4,
+    numberOfMusicians: 1,
+    instrumentTypes: [tenorSax, trombone, euphonium, horn]
+  })
+
+  const voiceCBeret4 = new DivisionPart();
+  Object.assign(voiceCBeret4, {
+    nameOfVoice: "basse",
+    band: beret4,
+    numberOfMusicians: 1,
+    instrumentTypes: [sousaphone, baritoneSax]
+  })
+
+  const voiceDBeret4 = new DivisionPart();
+  Object.assign(voiceDBeret4, {
+    nameOfVoice: "percu",
+    band: beret4,
+    numberOfMusicians: 1,
+    instrumentTypes: [snareDrum]
+  })
+
+  await voiceABeret4.save();
+  await voiceBBeret4.save();
+  await voiceCBeret4.save();
+  await voiceDBeret4.save();
 
   await db.destroy();
   console.log("done !");
