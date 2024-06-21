@@ -1,0 +1,12 @@
+query SearchMusicians($instrumentTypeId: String) {
+  musicians(instrumentTypeId: $instrumentTypeId) {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    instrumentTypes {
+      name
+    }
+  }
+}

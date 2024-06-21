@@ -6,16 +6,15 @@ const JWT_PRIVATE_KEY = new TextEncoder().encode(
   process.env.JWT_PRIVATE_KEY || ""
 );
 
-console.log({ JWT_PRIVATE_KEY: process.env.JWT_PRIVATE_KEY });
-
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
-
-  console.log({ token });
 
   if (token) {
     try {
       const { payload } = await jwtVerify(token, JWT_PRIVATE_KEY);
+      if(request.nextUrl.pathname.startsWith('/admin')){
+        if (payload.role !== "admin") return NextResponse.redirect(new URL("/", request.url));
+      }
       if (payload.userId) return NextResponse.next();
     } catch (e) {}
   }
