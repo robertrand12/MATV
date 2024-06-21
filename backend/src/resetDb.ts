@@ -40,6 +40,7 @@ async function main() {
     phoneNumber: "0611111111",
     role: UserRoleEnum.Admin,
     group: GroupEnum.A,
+    isPasswordInitialized: true,
   });
 
   const tenorSax = new InstrumentType();
@@ -310,11 +311,11 @@ async function main() {
     firstName: "Antoine",
     lastName: "Calini",
     email: "antoine@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.A,
     preferedInstrument: sousaphone,
-    instrumentTypes: [sousaphone, banjo, guitare],
+    instrumentTypes: [sousaphone, banjo, guitare],    
+    isPasswordInitialized: true,
   });
   await antoine.save();
 
@@ -323,11 +324,11 @@ async function main() {
     firstName: "Julien",
     lastName: "Mandonnet",
     email: "jul@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.A,
     preferedInstrument: tenorSax,
     instrumentTypes: [tenorSax, altoSax, sopranoSax],
+    isPasswordInitialized: true,
   });
   await mandonet.save();
 
@@ -336,11 +337,11 @@ async function main() {
     firstName: "Guillaume",
     lastName: "Klein",
     email: "guigui@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.A,
     preferedInstrument: snareDrum,
     instrumentTypes: [snareDrum, bassDrum],
+    isPasswordInitialized: true,
   });
   await glain.save();
 
@@ -349,11 +350,11 @@ async function main() {
     firstName: "Eddy",
     lastName: "Eddy",
     email: "eddy@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.B,
     preferedInstrument: snareDrum,
     instrumentTypes: [snareDrum, bassDrum],
+    isPasswordInitialized: true,
   });
   await eddy.save();
 
@@ -362,11 +363,11 @@ async function main() {
     firstName: "Sébastien",
     lastName: "Bahoui",
     email: "seb@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.B,
     preferedInstrument: trumpet,
     instrumentTypes: [trumpet],
+    isPasswordInitialized: true,
   });
   await seb.save();
 
@@ -375,11 +376,11 @@ async function main() {
     firstName: "Camille",
     lastName: "Poupout",
     email: "camille@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.B,
     preferedInstrument: altoSax,
     instrumentTypes: [altoSax, tenorSax],
+    isPasswordInitialized: true,
   });
   await camille.save();
 
@@ -388,11 +389,11 @@ async function main() {
     firstName: "Bertrand",
     lastName: "Roger",
     email: "bertrand@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.B,
     preferedInstrument: altoSax,
     instrumentTypes: [altoSax, tenorSax, baritoneSax, bassDrum],
+    isPasswordInitialized: true,
   });
   await bertrand.save();
 
@@ -401,11 +402,11 @@ async function main() {
     firstName: "Olivier",
     lastName: "Albert",
     email: "olivier@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.B,
     preferedInstrument: snareDrum,
     instrumentTypes: [snareDrum, bassDrum],
+    isPasswordInitialized: true,
   });
   await olivier.save();
 
@@ -414,11 +415,11 @@ async function main() {
     firstName: "Thomas",
     lastName: "Beauregard",
     email: "tom@app.com",
-    password: "ChouchouDu28!",
     phoneNumber: "0611111111",
     group: GroupEnum.B,
     preferedInstrument: trombone,
     instrumentTypes: [trombone, sousaphone],
+    isPasswordInitialized: true,
   });
   await thomas.save();
 

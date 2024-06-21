@@ -17,6 +17,7 @@ import {
 import InstrumentType from "./InstrumentType";
 import Event from "./Event";
 import Musician from "./Musician";
+import { ObjectId } from "../types";
 
 export enum UserRoleEnum {
   Admin = "admin",
@@ -35,7 +36,7 @@ export enum GroupEnum {
 @Entity()
 @ObjectType()
 class User extends BaseEntity {
-  password: string;
+  password: string = "UserInitialized1!";
 
   @BeforeInsert()
   async hashPassword() {
@@ -92,6 +93,15 @@ class User extends BaseEntity {
   @Field()
   updateddAt: Date;
 
+  @Column({ default: false })
+  isPasswordInitialized: boolean;
+
+  @Column({ nullable: true, type: "varchar", unique: true })
+  passwordInitializeToken?: string | null;
+
+  @Column({ nullable: true, type: "varchar", unique: true })
+  resetPasswordToken?: string | null;
+
   @JoinTable()
   @ManyToMany(() => InstrumentType, (i) => i.users, {
     cascade: true,
@@ -126,12 +136,40 @@ export class NewUserInput {
   @Field()
   lastName: string;
 
-  @IsPhoneNumber('FR')
   @Field()
   phoneNumber: string;
 
   @Field({nullable: true})
   group: string
+
+  @Field(() => [ObjectId], { nullable: true })
+  instrumentTypes?: ObjectId[];
+
+  @Field(() => ObjectId)
+  preferedInstrument: ObjectId;
+}
+
+@InputType()
+export class LoginInput {
+  @Field()
+  email: string;
+
+  @Field()
+  @IsStrongPassword()
+  password: string;
+}
+
+@InputType()
+export class ResetPasswordRequestInput {
+  @Field()
+  email: string;
+}
+
+@InputType()
+export class ResetPasswordInput {
+  @Field()
+  @IsStrongPassword()
+  password: string;
 }
 
 export default User;
